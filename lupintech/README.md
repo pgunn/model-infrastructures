@@ -24,7 +24,7 @@ API Servers in each POP categorise their data using a Usenet-like model, and use
 - POP systems are independent from each other (although they NNTP peer). While a client will attempt to reuse a “routing key” they got when building a connection, if the backing host is down or the data is likely no longer in cache, the hardware load balancers will route requests to a new host and tell the client to update its routing key. Client code usually will also try not to use stale routing keys.
 - Wiping a host, including loss of data it hasn’t streamed up, is explicitly considered “no big deal”.
 
-##Central Services Infrastructure
+## Central Services Infrastructure
 - Currently 4 machine rooms, 2 in the US (lupin-us-pgh and lupin-us-sea), one in the UK (lupin-uk-mk), 1 in South Africa (lupin-sa-cape). Never colocated with a POP.
 - Also 2 GCE regions, one in Singapore (gce-asia-southeast-1), one in Israel (gce-middleeast-central-1)
 - This makes for 6 zones.
