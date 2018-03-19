@@ -11,8 +11,7 @@ LupinTech’s infrastructure is divided into two tiers:
 
 API Servers in each POP categorise their data using a Usenet-like model, and use NNTP as a transport mechanism for dataflows. For example, the example application above might turn a trail review into a post on clientposts.trailblaze.geo.idaho (perhaps crossposting to another group if it might need to be searchable in another way). The POP’s NNTP servers would use regular NNTP synchronisation to send it to CentralServices and to all the other POPs, which in turn would lazily parse it (deep, geographically-aware paths and crossposting helps make for efficient searches). 
 
-
-POP (Point of Presence) Infrastructure
+## POP (Point of Presence) Infrastructure
 - Currently there are around 25 POPs. They’re all physical infrastructure in leased space. Eventually will extend into AWS and GCE.
 - Each POP is 5-30 machines
 - Software running on the bare OS. Chef, Debian. Currently no plans to change this.
@@ -24,7 +23,8 @@ POP (Point of Presence) Infrastructure
 - Hardware load balancers/health checkers sit in front of the entire POP
 - POP systems are independent from each other (although they NNTP peer). While a client will attempt to reuse a “routing key” they got when building a connection, if the backing host is down or the data is likely no longer in cache, the hardware load balancers will route requests to a new host and tell the client to update its routing key. Client code usually will also try not to use stale routing keys.
 - Wiping a host, including loss of data it hasn’t streamed up, is explicitly considered “no big deal”.
-Central Services Infrastructure
+
+##Central Services Infrastructure
 - Currently 4 machine rooms, 2 in the US (lupin-us-pgh and lupin-us-sea), one in the UK (lupin-uk-mk), 1 in South Africa (lupin-sa-cape). Never colocated with a POP.
 - Also 2 GCE regions, one in Singapore (gce-asia-southeast-1), one in Israel (gce-middleeast-central-1)
 - This makes for 6 zones.
