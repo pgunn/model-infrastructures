@@ -23,4 +23,10 @@ Work done in Limited's infrastructure is (believed to be) highly decoupled; work
 
 Limited has two main offices, one in its headquarters in Boston USA, and one in its secondary office in Erlangen Germany. It intends to open a third office in the Asia-Pacific region in about a year (specifics not yet determined). For proximity to its staff, it maintains its (presently 2) datacentres nearby. It calls these pDC (physical DataCenter) and calls its presence in GCE and AWS vDC (virtual DataCenter). It does not maintain virtual networks or similar between its pDCs or vDCs.
 
-(more to come)
+Limited's infrastructure can be divided into a few host types:
+* Systems that are used for interactive sessions between clients and analysts. In pDCs this happens in a VM (a given host runs many VMs). In vDCs usually this happens in an instance that's spun up specifically for the interaction. These systems only perform the most trivial of computation (they're mainly specced for running Matlab or Mathematica or Jupyter); real work is farmed off to the batch system (below)
+* Datastores - These are proximate to the interactive systems and hold user-provided datasets for analysis (both interactive and batch). They're usually running inside containers, and have network plumbing restricting their exposed port to access from the VMs allocated to a particular client. They run a great variety of storage technologies (hBase, Postgres, MongoDB, whatever clients want). Some datastores are outside this (some are in S3 or GS, some are large filesystems, and occasionally clients continue to host their data and set up access across the networks)
+* Batch System - This is a large and varied set of hosts that do work on data in the datastores. They're categorised as a grid across two dimensions: short versus long, and a variety of specific hardware profiles. The short queue runs shorter tasks in times reasonable for client-analyst interactions. The long queue runs longer tasks whenever resources are available. The batch system is designed to flexibly allow VM or container-based workflows (VMs are used to run user-provided binaries).
+
+There's a much smaller number of additional internal services (including an internal knowledgebase based on MediaWiki and an internal Jira for tracking work). The main website for Limited is hosted on Cloudfront/S3.
+
